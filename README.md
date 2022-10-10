@@ -8,7 +8,14 @@
 
 ## A szimuláció folyamata és a jutalomrendszer
 
+
 ## Beadandó
+
+* A **Moodle**-re python és java nyelven írt implementáció esetében is egy-egy fájlt kell feltölteni. Ehhez kiadunk egy-egy sablont, amiben a szükséges függvények megtalálhatóak. Ezek szignatúráit nem érdemes módosítani, különben nem fog lefutni a beadás. 
+* Java implementáció esetén nem lehet használni semmilyen külső csomagot, csakis a java 11.0.7 beépített könyvtárait. A Q-táblázatos megoldáshoz előre megírtunk egy egyszerű osztályt a [LunarLanderAgentBase.java](LunarLanderAgentBase.java) fájlban. 
+* Python-ban (3.7.3-as verzió) írt megoldás esetén lehet használni a `numpy` könyvtárat (1.16.2-es verzió). 
+* Mindkét esetben **pontosan egy fájlt kell feltölteni**: [LunarLanderAgentBase.java](LunarLanderAgentBase.java) vagy [lunar_lander_agent_base.py](lunar_lander_agent_base.py) névvel.
+
 
 ## A futtatókörnyezet beállítása
 
@@ -83,6 +90,7 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 
 **tanítás vége** `trainEnd()`, `train_end()` - Jelzi a tanítás végét, ez után kezdődik a kiértékelés.
 
+
 ## Javaslatok
 
 * A feladat megoldható maximális pontszámmal Q táblázatos módszerrel.
@@ -92,6 +100,7 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 * A `trainEnd()`/`train_end()` függvények is hint-ek (tehát iránymutatásként vannak jelen).
 * Bármilyen felmerülő kérdés esetén a Mesterséges Intelligencia Teams-csoport "Házi Feladat" vagy "Kérdések és Válaszok" csatornájába érdemes írni. Itt egyrészről hamarabb érkezik majd válasz a föltett kérdésekre, illetve a válaszokból így mások is okulhatnak.
 * Érdemes a beadási határidő előtt legalább néhány nappal elkezdeni a házi feladat megoldását, mert a határidő közeledtével a rendszer terhelése és az oktatók válaszideje is jelentősen megnőhet.
+
 
 ## Egyéb fontos tudnivalók
 
