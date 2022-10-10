@@ -32,7 +32,7 @@ Kérjük, hogy első körben ezen történjen meg a házi feladat tesztelése. A
 Ezután következik a kiértékelés, amely $10$ darab szimulációból (epoch-ból) áll. Ez a $10$ darab szimuláció képezi
 a kiértékelés alapját. Minden szimulációnak ötféle kimenetele lehet:
 * **landolás**: Az ágens sikeresen letette a holdraszálló egységet a platformra, a megengedett toleranciaértéken belüli sebességgel (<= 2m/s).
-* **landolás (törött láb): Az ágens sikeresen letette a holdraszálló egységet a platformra a megengedett sebességnél gyorsabban, de emiatt csak a leszállóegység lábai sérültek, az egység működőképes maradt (<= 4m/s).
+* **landolás (törött láb)**: Az ágens sikeresen letette a holdraszálló egységet a platformra a megengedett sebességnél gyorsabban, de emiatt csak a leszállóegység lábai sérültek, az egység működőképes maradt (<= 4m/s).
 * **landolás (megsemmisült)**: Az ágens a leszállás során eltalálta a platformot, viszont túl nagy sebességgel érkezett (> 4m/s), ezért a leszállóegység jelentős sérülést szenvedett.
 * **lezuhant**: Az ágens elérte a szimulációs tér szélét, és nem találta el a platformot.
 * **letelt az idő**: Az előre meghatározott időkeret (200 iteráció) letelt, és az ágens még nem érte el a szimulációs tér szélét.
