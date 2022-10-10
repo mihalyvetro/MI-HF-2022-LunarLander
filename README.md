@@ -11,16 +11,16 @@ Tekintve azonban, hogy Arstotzka polgárait még a tengeribetegség is szörnyen
 de büszke nemzetének sajnos még tengerpartja sincs), így a küldetés teljes egészét úgy kell megterveznie az újonnan alakult 
 Arstotzkai Űrügynökségnek, hogy az szükség esetén teljesen autonóm módon is működni tudjon. 
 Mostanra a rendszer szinte minden komponense készen áll, viszont a mérnökök problémába ütköztek a leszállást irányító 
-szoftver implementációjával. Így tehát ezen házi feladat során ránk hárul a nemes és megtisztelő feladat, hogy Arstotzka 
-büszke nemzetének egy polgárát (állapotától függetlenül) eljuttathassuk a Holdra!
+szoftver implementációjával. Így tehát ezen házi feladat során ránk hárul a nemes és megtisztelő feladat, hogy Arstotzka
+egy polgárát (állapotától függetlenül) eljuttathassuk a Holdra!
 
 
 ## Feladat
 
 Ebben a házi feladatban a cél egy tanuló ágens implementálása, amely képes egy egyszerű szimulációs környezetben 
 biztonságos leszállást végrehajtani egy holdraszálló egységgel. Ehhez **javasoljuk a táblázatos Q-tanulás használatát**. 
-Egy kiértékelés $1.000.000$ tanulási iterációt és $10$ epochnyi éles következtetést jelent.  
-Egy iteráció azt jelenti, hogy az ágens megkapja a legfrissebb játékállapotot, és az alapján visszaadja, hogy mit cselekszik. 
+Egy kiértékelés $1.000.000$ tanulási iterációt és $10$ epochnyi éles következtetést jelent. 
+Egy iteráció azt jelenti, hogy az ágens megkapja a legfrissebb környezeti állapotot, és az alapján visszaadja, hogy mit cselekszik. 
 Esetünkben **0: ha nem csinál semmit, 1: ha bekapcsolja a főhajtóművet, 2: ha bekapcsolja a baloldali hajtóművet, és 3: ha 
 bekapcsolja a jobboldali hajtóművet**. Ha az ágens valamilyen módon landol, vagy kifut az időből (200 iteráció), 
 akkor a szimuláció elölről kezdődik. Egy epoch az indulástól számítva az ágens landolásáig, illetve legfeljebb 
