@@ -4,20 +4,20 @@
 
 ## Környezet
 
+
 ## Feladat
 
 Ebben a házi feladatban a cél egy tanuló ágens implementálása, amely képes egy egyszerű szimulációs környezetben 
 biztonságos leszállást végrehajtani egy holdraszálló egységgel. Ehhez **javasoljuk a táblázatos Q-tanulás használatát**. 
-A feladatot leegyszerűsítettük úgy, hogy ne legyen túl nagy az állapottér, így beleférjünk az időbe és a memóriába. 
 Egy kiértékelés $1.000.000$ tanulási iterációt és $10$ epochnyi éles következtetést jelent.  
 Egy iteráció azt jelenti, hogy az ágens megkapja a legfrissebb játékállapotot, és az alapján visszaadja, hogy mit cselekszik. 
 Esetünkben **0: ha nem csinál semmit, 1: ha bekapcsolja a főhajtóművet, 2: ha bekapcsolja a baloldali hajtóművet, és 3: ha 
 bekapcsolja a jobboldali hajtóművet**. Ha az ágens valamilyen módon landol, vagy kifut az időből (200 iteráció), 
 akkor a szimuláció elölről kezdődik. Egy epoch az indulástól számítva az ágens landolásáig, illetve legfeljebb 
-200 iteráción keresztül tart. Minden iteráció után van lehetősége tanulni az ágnesnek, ehhez megkapja az előző állapotot, 
-az új állapotot, a cselekvését és a kapott rewardot. Az epochok és a tanítás végét is függvény jelzi az ágensnek.
+200 iteráción keresztül tart. Az ágensnek minden iteráció után lehetősége van tanulni, ehhez megkapja az előző állapotot, 
+az új állapotot, a cselekvését és a kapott rewardot. Az epochok és a tanítás végét is függvény jelzi az ágens számára.
 
-A feladat megoldásához kiadunk egy ahhoz nagyon hasonló futtatókörnyezetet, mint amin élesben fog történni a kiértékelés. 
+A feladat megoldásához kiadunk egy, a Moodle rendszerben futtatotthoz hasonló kiértékelő környezetet. 
 Kérjük, hogy első körben ezen történjen meg a házi feladat tesztelése. A tanítás $10^6$ iteráción keresztül történik. 
 Ezután következik a kiértékelés, amely $10$ darab szimulációból (epoch-ból) áll. Az ezen $10$ darab szimuláció képezi
 a kiértékelés alapját. Minden szimulációnak ötféle kimenetele lehet:
@@ -34,6 +34,42 @@ szerezni, hogyha az ágens 10-ből 3-szor tökéletesen landol.)
 
 
 ## A szimuláció folyamata és a jutalomrendszer
+
+A szimuláció egy $300$ méter széles, és $200$ méter magas térben történik. A holdraszálló egység a tér közepe fölött, $180$ méteres 
+magasságban kezd, és az a feladata, hogy a tér alján véletlenszerűen elhelyezett, 40 méter szélességű platformon landoljon a hajtóművek segítségével. Emellett a holdraszálló egység kezdősebessége is véletlenszerű, a kezdősebességét leíró vektor vízszintes komponensét 
+$-1$ és $1$, függőleges komponensét pedig $1$ és $5$ között (itt a sebességvektor függőleges komponense esetén a pozitív irány lefelé mutat) 
+egyenletes eloszlás szerint sorsoljuk. A szimuláció során az ágens használhatja a leszállóegység három hajtóművét, 
+amelyek közül kettő oldalirányba, egy pedig lefelé "mutat". 
+A leszállóegységre folyamatosan hat a lefelé mutató gravitációs erő, amelyhez hozzáadódik egy-egy megfelelő irányú erővektor 
+a három hajtómű bármelyikének aktiválása esetén.
+A szimuláció véget ér, hogyha a leszállóegység eléri a szimulációs tér bármelyik szélét, 
+vagy ha letelik a rendelkezésre álló idő. A szimuláció lehetséges kimeneteinek listájához lásd: előző bekezdés. 
+Minden szimuláció kezdetén a reward értéke $0$, és minden iterációban módosul az alábbi szabályok szerint:
+* Hogyha a leszállóegység használta valamelyik hajtóművét a háromból (tehát `[1, 2, 3]` cselekvések): $-0.01$ reward
+* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke csökkent az előző iterációhoz képest: $+0.1$ reward
+* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke növekedett az előző iterációhoz képest: $-0.1$ reward
+* Hogyha a szimuláció véget ért, akkor az egyes kimenetelekhez tartozó reward-okat az alábbi táblázat írja le (itt $V$ a beérkezés pillanatában mért sebességet jelöli):
+
+|**Kimenetel**|**Reward**|
+|---          |---       |
+|**landolás**|$+100$|
+|**landolás (láb törött)**|$+(50 - 10V)$|
+|**landolás (megsemmisült)**|$+10$|
+|**lezuhant**|$-100$|
+|**letelt az idő**|$-10$|
+
+
+## A megfigyelési tér
+
+Az ágens minden iterációban megkapja a leszállóegységtől a platform közepébe mutató vektor X és Y komponensét, illetve a leszállóegység 
+pillanatnyi sebességvektorának X és Y komponensét. Így tehát a környezet állapotát leíró vektor: `[TargetX, TargetY, VelocityX, VelocityY]` 
+A vektor mind a négy értéke folytonos (float), és az alábbi tartományban lehet:
+|Érték|min|max|
+|:-:|---|---|
+|`TargetX`|$-300$|$300$|
+|`TargetY`|$0$|$200$|
+|`VelocityX`|$-7$|$7$|
+|`VelocityY`|$-7$|$7$|
 
 
 ## Beadandó
