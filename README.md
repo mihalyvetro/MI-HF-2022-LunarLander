@@ -4,6 +4,16 @@
 
 ## Környezet
 
+Arstotzka állam hatalmas technológiai fejlődésen esett át az elmúlt évtizedekben, mióta a tudósoknak már nem kell 
+a háborúk miatt külföldre menekülniük. E nagyszerű folyamat tetőpontján a Központi Bizottság úgy döntött, hogy immár közel 
+hetven évnyi kihagyás után újból embert kell juttatnunk a Holdra, mégpedig nem mást, mint Arstotzka legkiválóbb lakosainak egyikét.
+Tekintve azonban, hogy Arstotzka polgárait még a tengeribetegség is szörnyen megviseli (ez nem csoda, hiszen Arstotzka kicsiny 
+de büszke nemzetének sajnos még tengerpartja sincs), így a küldetés teljes egészét úgy kell megterveznie az újonnan alakult 
+Arstotzkai Űrügynökségnek, hogy az szükség esetén teljesen autonóm módon is működni tudjon. 
+Mostanra a rendszer szinte minden komponense készen áll, viszont a mérnökök problémába ütköztek a leszállást irányító 
+szoftver implementációjával. Így tehát ezen házi feladat során ránk hárul a nemes és megtisztelő feladat, hogy Arstotzka 
+büszke nemzetének egy polgárát (állapotától függetlenül) eljuttathassuk a Holdra!
+
 
 ## Feladat
 
