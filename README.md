@@ -42,7 +42,46 @@ Ezt követően implementáljuk a megoldást a [lunar_lander_agent_base.py](lunar
 részletezett interfész-specifikáció alapján. Az implementált megoldást ki lehet próbálni egy GUI-val rendelkező megjelenítő 
 ([lunar_lander_gui.py](lunar_lander_gui.py)) vagy a Moodle által is használt kiértékelő 
 ([lunar_lander_evaluator.py](lunar_lander_evaluator.py)) futtatásával.
+
+
 ## Az interfészről
+
+A feladat megoldása során csak a [LunarLanderAgentBase.java](LunarLanderAgentBase.java) vagy [lunar_lander_agent_base.py](lunar_lander_agent_base.py) 
+fájlt szabad módosítani, illetve ez az egyetlen fájl, amelyet a Moodle rendszerbe be is kell adni. Az ezen fájlban található LunarLanderAgentBase osztályt 
+implementálja majd a LunarLanderAgent osztály, amely kiegészíti azt egy step() függvénnyel. A LunarLanderAgentBase osztály konstruktorában alapból 
+definiálásra kerül Q táblát leíró változó (qTable vagy q_table), és egy epsilon paraméter. Ezek létezése a step() függvény futása miatt fontos, 
+enélkül az nem fog működni.
+
+Emellett a `LunarLanderAgentBase` osztályt definiáló fájl tartalmaz egy `OBSERVATION_SPACE_RESOLUTION` nevű statikus változót, amelyben meg kell adnunk, 
+hogy az állapottér 4 értékét egyenként hány szintre fogjuk kvantálni. Ez azért fontos, mert **ez határozza meg a Q tábla méretét**. Emiatt az állapot 
+kvantálásáért felelős függvény (`quantizeState` vagy `quantize_state`) mindig egy olyan integer listát/tömböt kell visszaadjon, amellyel a 
+Q tábla indexelhető. Például, hogyha a kvantálási szinteket az alábbi módon választom meg: `[15, 10, 15, 8]` akkor a kvantáló függvény 
+visszatérési értékének értékkészlete, inkluzív módon az alábbi: `[0-14, 0-9, 0-14, 0-7]` (tehát pl. az első érték legalább 0-s és 
+legfeljebb 14-es **integer** értéket kell, hogy felvegyen).
+
+**Mielőtt belekezdenénk az implementációba, javasolt tanulmányozni a `LunarLanderAgent` osztályban definiált `step()` függvény működését!**
+
+A megvalósítandó függvények szignatúráinak leírása az alábbi:
+
+**konstruktor** LunarLanderAgentBase(), LunarLanderAgentBase()
+  * observation space: minimum-maximum párok listája/tömbje, amelyek az állapotteret leíró változók által fölvett legkisebb és legnagyobb értéket (float) tartalmazzák: `[platformra mutató vektor X komponense, platformra mutató vektor Y komponense, sebességvektor X komponense, sebességvektor Y komponense]`
+  * action space: integer lista/tömb, a lehetséges cselekvésekkel (`[0, 1, 2, 3]`, ahol a 0 a "ne csinálj semmit", 1 a "fő hajtómű", 2 a "hajtómű jobbra" és 3 a "hajtómű balra")
+  * number of iterations: tanulási iterációk száma
+
+**állapot kvantálás** quantizeState(), quantize_state() - Visszaadja a kapott folytonos állapothoz tartozó kvantált értéket.
+  * observation space: a konstruktor által is megkapott minimum-maximum párok listája/tömbje, az állapottér változóihoz
+  * state: a kvantálandó állapot
+
+**epoch vége** epochEnd(), epoch_end() - Minden epoch végén meghívódik.
+  * epoch reward sum: az epochban szerzett reward-ok összege
+
+**tanulás** learn() - Minden iterációban meghívódik a tanulás során, ez alapján lehet tanítani az ágenst.
+  * old state: előző állapot
+  * action: az előző állapotban végrehajtott cselekvés
+  * new state: a cselekvés eredményeképp létrejött állapot
+  * reward: az új állapotba lépéssel együtt kapott jutalom
+
+**tanítás vége** trainEnd(), train_end() - Jelzi a tanítás végét, ez után kezdődik a kiértékelés.
 
 ## Javaslatok
 
