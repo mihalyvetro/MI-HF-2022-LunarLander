@@ -25,11 +25,11 @@ Esetünkben **0: ha nem csinál semmit, 1: ha bekapcsolja a főhajtóművet, 2: 
 bekapcsolja a jobboldali hajtóművet**. Ha az ágens valamilyen módon landol, vagy kifut az időből (200 iteráció), 
 akkor a szimuláció elölről kezdődik. Egy epoch az indulástól számítva az ágens landolásáig, illetve legfeljebb 
 200 iteráción keresztül tart. Az ágensnek minden iteráció után lehetősége van tanulni, ehhez megkapja az előző állapotot, 
-az új állapotot, a cselekvését és a kapott rewardot. Az epochok és a tanítás végét is függvény jelzi az ágens számára.
+az új állapotot, a cselekvését és a kapott jutalmat. Az epochok és a tanítás végét is függvény jelzi az ágens számára.
 
 A feladat megoldásához kiadunk egy, a Moodle rendszerben futtatotthoz hasonló kiértékelő környezetet. 
 Kérjük, hogy első körben ezen történjen meg a házi feladat tesztelése. A tanítás $10^6$ iteráción keresztül történik. 
-Ezután következik a kiértékelés, amely $10$ darab szimulációból (epoch-ból) áll. Az ezen $10$ darab szimuláció képezi
+Ezután következik a kiértékelés, amely $10$ darab szimulációból (epoch-ból) áll. Ez a $10$ darab szimuláció képezi
 a kiértékelés alapját. Minden szimulációnak ötféle kimenetele lehet:
 * **landolás**: Az ágens sikeresen letette a holdraszálló egységet a platformra, a megengedett toleranciaértéken belüli sebességgel (<= 2m/s).
 * **landolás (láb törött)**: Az ágens sikeresen letette a holdraszálló egységet a platformra a megengedett sebességnél gyorsabban, de emiatt csak a leszállóegység lábai sérültek, az egység működőképes maradt (<= 4m/s).
@@ -54,13 +54,13 @@ A leszállóegységre folyamatosan hat a lefelé mutató gravitációs erő, ame
 a három hajtómű bármelyikének aktiválása esetén.
 A szimuláció véget ér, hogyha a leszállóegység eléri a szimulációs tér bármelyik szélét, 
 vagy ha letelik a rendelkezésre álló idő. A szimuláció lehetséges kimeneteinek listájához lásd: előző bekezdés. 
-Minden szimuláció kezdetén a reward értéke $0$, és minden iterációban módosul az alábbi szabályok szerint:
-* Hogyha a leszállóegység használta valamelyik hajtóművét a háromból (tehát `[1, 2, 3]` cselekvések): $-0.01$ reward
-* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke csökkent az előző iterációhoz képest: $+0.1$ reward
-* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke növekedett az előző iterációhoz képest: $-0.1$ reward
-* Hogyha a szimuláció véget ért, akkor az egyes kimenetelekhez tartozó reward-okat az alábbi táblázat írja le (itt $V$ a beérkezés pillanatában mért sebességet jelöli):
+Minden szimuláció kezdetén a jutalom értéke $0$, és minden iterációban módosul az alábbi szabályok szerint:
+* Hogyha a leszállóegység használta valamelyik hajtóművét a háromból (tehát `[1, 2, 3]` cselekvések): $-0.01$
+* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke csökkent az előző iterációhoz képest: $+0.1$
+* Hogyha a platformra mutató vektor vízszintes komponensének abszolútértéke növekedett az előző iterációhoz képest: $-0.1$
+* Hogyha a szimuláció véget ért, akkor az egyes kimenetelekhez tartozó jutalmakat az alábbi táblázat írja le (itt $V$ a beérkezés pillanatában mért sebességet jelöli):
 
-|**Kimenetel**|**Reward**|
+|**Kimenetel**|**Jutalom**|
 |---          |---       |
 |**landolás**|$+100$|
 |**landolás (láb törött)**|$+(50 - 10V)$|
@@ -153,7 +153,7 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
   * `state`: a kvantálandó állapot
 
 **epoch vége** `epochEnd()`, `epoch_end()` - Minden epoch végén meghívódik.
-  * `epoch reward sum`: az epochban szerzett reward-ok összege
+  * `epoch reward sum`: az epochban szerzett jutalmak összege
 
 **tanulás** `learn()` - Minden iterációban meghívódik a tanulás során, ez alapján lehet tanítani az ágenst.
   * `old state`: előző állapot
@@ -169,7 +169,7 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 * A feladat megoldható maximális pontszámmal Q táblázatos módszerrel.
 * A Q tábla méretének (tehát az állapottér változóira alkalmazott kvantálási szintek számának) megfelelő meghatározása kulcsfontosságú. Túlzottan nagy felbontású kvantálás mellett az ágens nem fogja kellő alapossággal fölfedezni az állapotteret, és a számításigény és a memóriaigény is jelentősen megnövekszik. Túlságosan durva (alacsony felbontású) kvantálás mellett pedig előfordulhat, hogy az ágens nem jut kellő mennyiségű információhoz, és így nem tud majd megfelelően dönteni.
 * **Az állapotteret nem csak lineárisan lehet kvantálni.** Az állapottér kevésbé fontos részeit (tehát azokat a részeket, ahol feltételezzük, hogy mindenképp csak egyféle helyes döntés létezik, például a sebességvektor szélsőértékeinek közelében, ahol biztosan lassítani kell) kvantálhatjuk alacsonyabb felbontással is, mint a többi részt. Ezáltal a futásidő javul, és a tanulás során az ágens jobban fel tudja fedezni az állapotteret.
-* Erősen ajánlott tanulás közben bizonyos időközönként módosítani az `epsilon` ("explore/exploit") paramétert (epsilon-decay), valamint a Q-tanulás frissítési szabályainak paramétereit. Emellett akár a reward-okat is át lehet skálázni az ágens működésén belül.
+* Erősen ajánlott tanulás közben bizonyos időközönként módosítani az `epsilon` ("explore/exploit") paramétert (epsilon-decay), valamint a Q-tanulás frissítési szabályainak paramétereit. Emellett akár a jutalmakat is át lehet skálázni az ágens működésén belül.
 * A `trainEnd()`/`train_end()` függvények is hint-ek (tehát iránymutatásként vannak jelen).
 * Bármilyen felmerülő kérdés esetén a Mesterséges Intelligencia Teams-csoport "Házi Feladat" vagy "Kérdések és Válaszok" csatornájába érdemes írni. Itt egyrészről hamarabb érkezik majd válasz a föltett kérdésekre, illetve a válaszokból így mások is okulhatnak.
 * Érdemes a beadási határidő előtt legalább néhány nappal elkezdeni a házi feladat megoldását, mert a határidő közeledtével a rendszer terhelése és az oktatók válaszideje is jelentősen megnőhet.
