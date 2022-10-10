@@ -6,6 +6,33 @@
 
 ## Feladat
 
+Ebben a házi feladatban a cél egy tanuló ágens implementálása, amely képes egy egyszerű szimulációs környezetben 
+biztonságos leszállást végrehajtani egy holdraszálló egységgel. Ehhez **javasoljuk a táblázatos Q-tanulás használatát**. 
+A feladatot leegyszerűsítettük úgy, hogy ne legyen túl nagy az állapottér, így beleférjünk az időbe és a memóriába. 
+Egy kiértékelés $1.000.000$ tanulási iterációt és $10$ epochnyi éles következtetést jelent.  
+Egy iteráció azt jelenti, hogy az ágens megkapja a legfrissebb játékállapotot, és az alapján visszaadja, hogy mit cselekszik. 
+Esetünkben **0: ha nem csinál semmit, 1: ha bekapcsolja a főhajtóművet, 2: ha bekapcsolja a baloldali hajtóművet, és 3: ha 
+bekapcsolja a jobboldali hajtóművet**. Ha az ágens valamilyen módon landol, vagy kifut az időből (200 iteráció), 
+akkor a szimuláció elölről kezdődik. Egy epoch az indulástól számítva az ágens landolásáig, illetve legfeljebb 
+200 iteráción keresztül tart. Minden iteráció után van lehetősége tanulni az ágnesnek, ehhez megkapja az előző állapotot, 
+az új állapotot, a cselekvését és a kapott rewardot. Az epochok és a tanítás végét is függvény jelzi az ágensnek.
+
+A feladat megoldásához kiadunk egy ahhoz nagyon hasonló futtatókörnyezetet, mint amin élesben fog történni a kiértékelés. 
+Kérjük, hogy első körben ezen történjen meg a házi feladat tesztelése. A tanítás $10^6$ iteráción keresztül történik. 
+Ezután következik a kiértékelés, amely $10$ darab szimulációból (epoch-ból) áll. Az ezen $10$ darab szimuláció képezi
+a kiértékelés alapját. Minden szimulációnak ötféle kimenetele lehet:
+* **landolás**: Az ágens sikeresen letette a holdraszálló egységet a platformra, a megengedett toleranciaértéken belüli sebességgel (<= 2m/s).
+* **landolás (láb törött)**: Az ágens sikeresen letette a holdraszálló egységet a platformra a megengedett sebességnél gyorsabban, de emiatt csak a leszállóegység lábai sérültek, az egység működőképes maradt (<= 4m/s).
+* **landolás (megsemmisült)**: Az ágens a leszállás során eltalálta a platformot, viszont túl nagy sebességgel érkezett (> 4m/s), ezért a leszállóegység jelentős sérülést szenvedett.
+* **lezuhant**: Az ágens elérte a szimulációs tér szélét, és nem találta el a platformot.
+* **letelt az idő**: Az előre meghatározott időkeret (200 iteráció) letelt, és az ágens még nem érte el a szimulációs tér szélét.
+
+A kiértékelés során végrehajtott $10$ darab iteráció közül minden **landolás** eredmény $4$ pontot, a **landolás (láb törött)** 
+eredmények $2$ pontot, a **landolás (megsemmisült)** eredmény pedig $1$ pontot ér. A **lezuhant** és **letelt az idő** 
+egyaránt $0$ pontot érnek, az elérhető maximális pontszám pedig $12$. (Ez azt jelenti, hogy a maximum pontot azzal is meg lehet 
+szerezni, hogyha az ágens 10-ből 3-szor tökéletesen landol.)
+
+
 ## A szimuláció folyamata és a jutalomrendszer
 
 
