@@ -85,4 +85,20 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 
 ## Javaslatok
 
+* A feladat megoldható maximális pontszámmal Q táblázatos módszerrel.
+* A Q tábla méretének (tehát az állapottér változóira alkalmazott kvantálási szintek számának) megfelelő meghatározása kulcsfontosságú. Túlzottan nagy felbontású kvantálás mellett az ágens nem fogja kellő alapossággal fölfedezni az állapotteret, és a számításigény és a memóriaigény is jelentősen megnövekszik. Túlságosan durva (alacsony felbontású) kvantálás mellett pedig előfordulhat, hogy az ágens nem jut kellő mennyiségű információhoz, és így nem tud majd megfelelően dönteni.
+* **Az állapotteret nem csak lineárisan lehet kvantálni.** Az állapottér kevésbé fontos részeit (tehát azokat a részeket, ahol feltételezzük, hogy mindenképp csak egyféle helyes döntés létezik, például a sebességvektor szélsőértékeinek közelében, ahol biztosan lassítani kell) kvantálhatjuk alacsonyabb felbontással is, mint a többi részt. Ezáltal a futásidő javul, és a tanulás során az ágens jobban fel tudja fedezni az állapotteret.
+* Erősen ajánlott tanulás közben bizonyos időközönként módosítani az `epsilon` ("explore/exploit") paramétert (epsilon-decay), valamint a Q-tanulás frissítési szabályainak paramétereit. Emellett akár a reward-okat is át lehet skálázni az ágens működésén belül.
+* A trainEnd()/train_end() függvények is hint-ek (tehát iránymutatásként vannak jelen).
+* Bármilyen felmerülő kérdés esetén a Mesterséges Intelligencia Teams-csoport "Házi Feladat" vagy "Kérdések és Válaszok" csatornájába érdemes írni. Itt egyrészről hamarabb érkezik majd válasz a föltett kérdésekre, illetve a válaszokból így mások is okulhatnak.
+* Érdemes a beadási határidő előtt legalább néhány nappal elkezdeni a házi feladat megoldását, mert a határidő közeledtével a rendszer terhelése és az oktatók válaszideje is jelentősen megnőhet.
+
 ## Egyéb fontos tudnivalók
+
+* A megoldás forráskódja nem tartalmazhat ékezetes vagy nem ASCII[0:127] karaktert.
+* A megoldásnak nem kell, hogy kimenete legyen, ezért ne legyen bennefelejtett debug print, mert errort jelezhet a kiértékelő.
+* A feltöltött megoldás megengedett futásideje CPU-időben 40 másodperc. Időtúllépés esetén a rendszer automatikusan leállítja a kód futását.
+* A feltöltött megoldás összesen legfeljebb 1000 MB memóriát allokálhat. Ezen érték túllépése esetén a rendszer automatikusan leállítja a kód futását.
+* A 2. beadástól kezdve 10 percenként lehet újra próbálkozni.
+* Az újonnan beadott megoldás eredménye felülírja az előzőt.
+* Minden bugreportot/javaslatot szívesen fogadunk, igyekszünk javítani.
