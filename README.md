@@ -178,6 +178,7 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 
 * A megoldás forráskódja nem tartalmazhat ékezetes vagy nem ASCII[0:127] karaktert.
 * A megoldásnak nem kell, hogy kimenete legyen, ezért ne legyen bennefelejtett debug print, mert errort jelezhet a kiértékelő.
+* A keretrendszer csak natív python nyelven írt megoldás esetén támogatja a közvetlen debug-olást valamilyen IDE (pl. PyCharm) segítségével. Java nyelven írt megoldásnál a standard kimenetre való print-elés a debug-olás egyetlen módja, viszont **a Moodle-re feltöltött változatban semmilyen kiíratás nem lehet**, különben hibát fog jelezni a kiértékelő. Ebből adódóan nagyon fontos, hogy a debug-oláshoz használt kiíratásokat töröljük a beadás előtt.
 * A feltöltött megoldás megengedett futásideje CPU-időben 40 másodperc. Időtúllépés esetén a rendszer automatikusan leállítja a kód futását.
 * A feltöltött megoldás összesen legfeljebb 1000 MB memóriát allokálhat. Ezen érték túllépése esetén a rendszer automatikusan leállítja a kód futását.
 * A 2. beadástól kezdve 10 percenként lehet újra próbálkozni.
