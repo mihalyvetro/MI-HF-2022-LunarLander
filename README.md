@@ -172,6 +172,8 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 * A `trainEnd()`/`train_end()` függvények iránymutatásként vannak jelen.
 * Bármilyen felmerülő kérdés esetén a Mesterséges Intelligencia Teams-csoport "Házi Feladat" csatornájába érdemes írni. Itt egyrészről hamarabb érkezik majd válasz a föltett kérdésekre, illetve a válaszokból így mások is okulhatnak.
 * Érdemes a beadási határidő előtt legalább néhány nappal elkezdeni a házi feladat megoldását, mert a határidő közeledtével a rendszer terhelése és az oktatók válaszideje is jelentősen megnőhet.
+* A kiadott kódfájlok között szerepel egy billentyűzettel való irányítást lehetővé tevő ágens is a [lunar_lander_user_agent.py](lunar_lander_user_agent.py) fájlban, amely szabadon használható (értelemszerűen csak a GUI-val rendelkező változatban érdemes a szimulációt ezzel az ágenssel futtatni).
+  * Az irányításhoz a billentyűzet **A**: (hajtómű balra), **S**: (főhajtómű), **D**: (hajtómű jobbra) gombjait lehet használni.
 
 
 ## Egyéb fontos tudnivalók
