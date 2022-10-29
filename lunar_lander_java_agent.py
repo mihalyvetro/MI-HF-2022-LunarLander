@@ -2,7 +2,7 @@ import subprocess
 
 from communication_master import CommunicationMaster
 
-java_path = ''  # TODO
+java_path = '/home/revy/.jdks/corretto-11.0.16.1/bin/'
 
 classname = 'StudentCodeBinder'
 filename = 'StudentCodeBinder.java'
