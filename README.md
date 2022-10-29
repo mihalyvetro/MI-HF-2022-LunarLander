@@ -5,13 +5,14 @@
 ## Környezet
 
 Arstotzka állam hatalmas technológiai fejlődésen esett át az elmúlt évtizedekben, mióta a tudósoknak már nem kell 
-a háborúk miatt külföldre menekülniük. E nagyszerű folyamat tetőpontján a Központi Bizottság úgy döntött, hogy immár közel 
-hetven évnyi kihagyás után újból embert kell juttatnunk a Holdra, mégpedig nem mást, mint Arstotzka legkiválóbb lakosainak egyikét.
+a háborúk miatt külföldre menekülniük. E folyamat tetőpontján a Központi Bizottság úgy döntött, hogy immár közel 
+hetven évnyi kihagyás után újból eljött az ideje, hogy embert juttassunk a Holdra, mégpedig nem mást, mint Arstotzka 
+legkiválóbb lakosainak egyikét.
 Tekintve azonban, hogy Arstotzka polgárait még a tengeribetegség is szörnyen megviseli (ez nem csoda, hiszen Arstotzka kicsiny 
-de büszke nemzetének sajnos még tengerpartja sincs), így a küldetés teljes egészét úgy kell megterveznie az újonnan alakult 
+nemzetének sajnos még tengerpartja sincs), így a küldetés teljes egészét úgy kell megterveznie az újonnan alakult 
 Arstotzkai Űrügynökségnek, hogy az szükség esetén teljesen autonóm módon is működni tudjon. 
 Mostanra a rendszer szinte minden komponense készen áll, viszont a mérnökök problémába ütköztek a leszállást irányító 
-szoftver implementációjával. Így tehát ezen házi feladat során ránk hárul a nemes és megtisztelő feladat, hogy Arstotzka
+szoftver implementációjával. Így tehát ezen házi feladat során ránk hárul a megtisztelő feladat, hogy Arstotzka
 egy polgárát (állapotától függetlenül) eljuttathassuk a Holdra!
 
 
@@ -92,34 +93,45 @@ A vektor mind a négy értéke folytonos (float), és az alábbi tartományban l
 
 ## A futtatókörnyezet beállítása
 
-A feladatot **java** és **python** nyelven egyaránt meg lehet oldani, viszont a kiértékelőt python nyelven implementáltuk,
-így saját számítógépen való teszteléshez szükséges egy Python környezet telepítése.
-A telepítéshez elsőként telepítsük a python környezetet, amennyiben az nincs eleve telepítve. 
+A feladatot **java** és **python** nyelven egyaránt meg lehet oldani, az egyes nyelvekhez tartozó natív kiértékelőt felhasználva.
+Emellett a feladathoz mellékeltünk egy grafikus megjelenítőt (GUI), amely megfelelő beállítások mellett Java és Python megoldáshoz egyaránt használható.
+
+### Java-specifikus beállítások
+Java nyelv használata esetén az implementációnkat a [LunarLanderAgentBase.java](LunarLanderAgentBase.java) fájlban készíthetjük el, 
+majd az elkészült megoldás a [LunarLanderEvaluator.java](LunarLanderEvaluator.java) fájl futtatásával tesztelhető.
+
+Amennyiben a grafikus megjelenítőt (GUI) is használni szeretnénk, úgy telepítenünk kell egy Python futtatókörnyezetet (lásd: következő bekezdés),
+majd meg kell adnunk a Java futtatókörnyezetünkhöz tartozó `java` és `javac` végrehajtható fájlok elérési útját a 
+[lunar_lander_java_agent.py](lunar_lander_java_agent.py) fájlban, a `java_exec_path` és a `javac_exec_path` változók beállításával.
+Például, hogyha Windows operációs rendszert használunk, és a JDK-t a `C:\Program Files\Java\jdk-11.0.16.1` mappába telepítettük, 
+akkor ezen két változó értékét az alábbi módon kell beállítanunk:
+```
+java_exec_path = 'C:\\Program Files\\Java\\jdk-11.0.16.1\\java.exe'
+javac_exec_path = 'C:\\Program Files\\Java\\jdk-11.0.16.1\\javac.exe'
+```
+Linux vagy MacOS esetén ezen futtatandó állományok elérési útjának és kiterjesztésének formátuma eltérő lehet. (pl. a Linux operációs rendszerek 
+fájlrendszerében tárolt végrehajtható fájlok nevéhez nem társítunk ".exe" kiterjesztést, amely Windows-specifikus)
+Ezt követően győződjünk meg róla, hogy a [lunar_lander_gui.py](lunar_lander_gui.py) fájl végén az `agent` változó értékének a 
+`LunarLanderJavaAgent` osztály egy példányát adjuk (erre példakód már eleve jelen van a fájlban, kikommentezve), majd ezen fájl 
+futtatásával elindíthatjuk a házi feladat kiértékelőjének grafikus felülettel ellátott változatát.
+Mivel a java és python nyelven íródott részeket összefogó glue kód a standard ki- és bemeneteken keresztül kommunikál, ezért 
+a GUI futtatása során különösen fontos, hogy **a Java megoldás ne írjon semmit a standard kimenetre**.
+
+### Python-specifikus beállítások
+Python nyelven írt megoldás esetén az első lépés értelemszerűen egy Python környezet telepítése, ammennyiben az még nincs beállítva a számítógépünkön.
 Ezt megtehetjük a hivatalos [Python telepítő](https://www.python.org/downloads/) vagy a - valamelyest könnyebben kezelhető -
 [Anaconda keretrendszer](https://www.anaconda.com/products/distribution) segítségével. 
 Mindkét opció egyformán elérhető Windows, Linux és Mac OS operációs rendszerekre.
 Ezt követően telepítsük a futtatáshoz szükséges python könyvtárakat, amelyek listáját a [requirements.txt](requirements.txt) fájlban adtuk meg. 
 A telepítés legegyszerűbben a `pip` parancs segítségével eszközölhető, az alábbi módon: ```pip install -r requirements.txt```
-### Java-specifikus beállítások
-Amennyiben a megoldásunkat java nyelven szeretnénk elkészíteni, meg kell adnunk a keretrendszer számára a java 
-futtatókörnyezet helyét. Ezt a [lunar_lander_java_agent.py](lunar_lander_java_agent.py) fájlon belül a `java_path` 
-változó beállításával tehetjük meg. Például, hogyha a java executable a `/usr/lib/jvm/java-11-openjdk-amd64/bin/` mappában található, 
-akkor ezt az alábbi módon állíthatjuk be a [lunar_lander_java_agent.py](lunar_lander_java_agent.py) fájlban:
-```
-java_path = '/usr/lib/jvm/java-11-openjdk-amd64/bin/'
-```
-Ezt követően implementáljuk a megoldásunkat a [LunarLanderAgentBase.java](LunarLanderAgentBase.java) fájl módosításával, a lentebb
-részletezett interfész-specifikáció alapján. Az implementált megoldást ki lehet próbálni egy GUI-val rendelkező megjelenítő 
-([lunar_lander_gui.py](lunar_lander_gui.py)) vagy a Moodle által is használt kiértékelő 
-([lunar_lander_evaluator.py](lunar_lander_evaluator.py)) futtatásával.
-### Python-specifikus beállítások
-Hogyha a megoldást python nyelven szeretnénk elkészíteni, győződjünk meg róla, hogy a [lunar_lander_gui.py](lunar_lander_gui.py) és a
+
+Kezdetben győződjünk meg róla, hogy a [lunar_lander_gui.py](lunar_lander_gui.py) és a
 [lunar_lander_evaluator.py](lunar_lander_evaluator.py) fájlokban a `LunarLanderAgent` osztály egy példányát adjuk meg az `agent` változó 
-értékeként, és **NEM** a `LunarLanderJavaAgent` osztály példányát. Ennek hatására a keretrendszer a 
-[lunar_lander_agent_base.py](lunar_lander_agent_base.py) fájlban található implementációt fogja alapul venni a futása során.
+értékeként. Ennek hatására a keretrendszer a [lunar_lander_agent_base.py](lunar_lander_agent_base.py) fájlban található implementációt 
+fogja alapul venni a futtatás során.
 
 Ezt követően implementáljuk a megoldást a [lunar_lander_agent_base.py](lunar_lander_agent_base.py) fájl módosításával, a lentebb 
-részletezett interfész-specifikáció alapján. Az implementált megoldást ki lehet próbálni egy GUI-val rendelkező megjelenítő 
+részletezett interfész-specifikáció alapján. Az implementált megoldást ki lehet próbálni a GUI-val rendelkező megjelenítő 
 ([lunar_lander_gui.py](lunar_lander_gui.py)) vagy a Moodle által is használt kiértékelő 
 ([lunar_lander_evaluator.py](lunar_lander_evaluator.py)) futtatásával.
 
