@@ -24,14 +24,14 @@ random_velocity_range = [[-1, 1],
 env = Environment(random_velocity_range=random_velocity_range)
 
 # python
-# agent = LunarLanderAgent(observation_space=env.observation_space,
-#                          action_space=env.action_space,
-#                          n_iterations=n_iterations)
+agent = LunarLanderAgent(observation_space=env.observation_space,
+                         action_space=env.action_space,
+                         n_iterations=n_iterations)
 
 # java
-agent = LunarLanderJavaAgent(observation_space=env.observation_space,
-                             action_space=env.action_space,
-                             n_iterations=n_iterations)
+# agent = LunarLanderJavaAgent(observation_space=env.observation_space,
+#                              action_space=env.action_space,
+#                              n_iterations=n_iterations)
 
 start_time = time.time()
 while iteration < n_iterations:

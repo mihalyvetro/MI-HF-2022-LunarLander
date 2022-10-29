@@ -2,9 +2,9 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 from lunar_lander_env import Environment
-# from lunar_lander_user_agent import LunarLanderUserAgent
 from lunar_lander_agent import LunarLanderAgent
 from lunar_lander_java_agent import LunarLanderJavaAgent
+from lunar_lander_user_agent import LunarLanderUserAgent
 
 
 class LunarLanderGUI:
@@ -194,9 +194,9 @@ if __name__ == "__main__":
     #                          n_iterations=n_iterations)
 
     # java
-    agent = LunarLanderJavaAgent(observation_space=env.observation_space,
-                                 action_space=env.action_space,
-                                 n_iterations=n_iterations)
+    # agent = LunarLanderJavaAgent(observation_space=env.observation_space,
+    #                              action_space=env.action_space,
+    #                              n_iterations=n_iterations)
 
     # user
     # agent = LunarLanderUserAgent(observation_space=env.observation_space,
