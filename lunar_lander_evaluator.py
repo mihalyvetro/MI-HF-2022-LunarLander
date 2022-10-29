@@ -106,5 +106,3 @@ print('Iterations:', num_test_iterations)
 print('Outcomes:')
 print('\t' + '\n\t'.join([f"{key}: {iteration_outcomes[key]}" for key in sorted(iteration_outcomes.keys())]))
 print(f'Aggregate test reward: {reward_sum:.2f}')
-
-

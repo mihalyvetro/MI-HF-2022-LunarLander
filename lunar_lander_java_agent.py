@@ -2,7 +2,7 @@ import subprocess
 
 from communication_master import CommunicationMaster
 
-java_path = '/home/revy/.jdks/corretto-11.0.16.1/bin/'
+java_path = ''  # TODO
 
 classname = 'StudentCodeBinder'
 filename = 'StudentCodeBinder.java'
@@ -18,16 +18,15 @@ class LunarLanderJavaAgent:
         if return_code != 0:
             raise Exception("** Compilation failed. Testing aborted **")
 
-        # create the object performing the communications between the programs
-        self.cm = CommunicationMaster()
-        
         # exec student code binder
-        exec_command = [java_exec_path, "-Xss16m", "-Xmx500m", classname,
-                        self.cm.pipe_to_slave_path, self.cm.pipe_from_slave_path]
+        exec_command = [java_exec_path, "-Xss16m", "-Xmx500m", classname]
 
         # run student code
-        student_process = subprocess.Popen(exec_command, stdout=None, stdin=None, stderr=None, text=True)
+        student_process = subprocess.Popen(exec_command, stdout=subprocess.PIPE,
+                                           stdin=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
+        # create the object performing the communications between the programs
+        self.cm = CommunicationMaster(student_process.stdin, student_process.stdout, student_process.stderr)
         # send a message to student code and wait for the answer
         init_msg = 'observation_space\n' + \
                    str(observation_space).replace('],', '\n').replace(']', '').replace('[', '') + \
@@ -62,6 +61,3 @@ class LunarLanderJavaAgent:
         msg = 'train_end'
         ack = self.cm.get_answer(msg)
         return
-
-    def __del__(self):
-        self.cm.get_answer("exit")

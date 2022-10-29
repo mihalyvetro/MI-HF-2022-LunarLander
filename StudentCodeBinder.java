@@ -3,20 +3,15 @@ import java.util.Arrays;
 
 public class StudentCodeBinder {
     public static void main(String[] args) {
-        String pipeToSlavePath = args[0];
-        String pipeFromSlavePath = args[1];
-
-        CommunicationSlave cs = new CommunicationSlave(pipeToSlavePath, pipeFromSlavePath);
-        
         // initialization
-        ArrayList<String> init_msg = cs.getMessage();
+        ArrayList<String> init_msg = CommunicationSlave.getMessage();
         boolean msg_ok =
                 init_msg.contains("observation_space") &&
                 init_msg.contains("action_space") &&
                 init_msg.contains("n_iterations");
 
         if (!msg_ok) {
-            cs.sendAnswer("0");
+            CommunicationSlave.sendAnswer("0");
         }
 
         int observationSpaceIdx = init_msg.indexOf("observation_space");
@@ -39,12 +34,12 @@ public class StudentCodeBinder {
         int nIterations = Integer.parseInt(init_msg.get(nIterationsIdx+1));
 
         LunarLanderAgent agent = new LunarLanderAgent(observationSpace, action_space, nIterations);
-        cs.sendAnswer("1");
+        CommunicationSlave.sendAnswer("1");
 
         // process commands
         boolean end = false;
         while (!end) {
-            ArrayList<String> command = cs.getMessage();
+            ArrayList<String> command = CommunicationSlave.getMessage();
 
             switch (command.get(0)) {
                 case "step": {
@@ -52,7 +47,7 @@ public class StudentCodeBinder {
                             .mapToDouble(Double::parseDouble)
                             .toArray();
                     int action = agent.step(state);
-                    cs.sendAnswer(String.valueOf(action));
+                    CommunicationSlave.sendAnswer(String.valueOf(action));
                 }
                     break;
                 case "learn": {
@@ -65,20 +60,19 @@ public class StudentCodeBinder {
                             .toArray();
                     double reward = Double.valueOf(command.get(4));
                     agent.learn(oldState, action, newState, reward);
-                    cs.sendAnswer("1");
+                    CommunicationSlave.sendAnswer("1");
                 }
                     break;
                 case "epoch_end":
                     double epochRewardSum = Double.valueOf(command.get(1));
                     agent.epochEnd(epochRewardSum);
-                    cs.sendAnswer("1");
+                    CommunicationSlave.sendAnswer("1");
                     break;
                 case "train_end":
                     agent.trainEnd();
-                    cs.sendAnswer("1");
+                    CommunicationSlave.sendAnswer("1");
                     break;
                 default:
-                    cs.sendAnswer("1");
                     end = true;
             }
 
