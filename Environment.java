@@ -37,7 +37,7 @@ public class Environment {
     double[] state() {
         Vector vectorToPlatform = platform.vectorFromLander(lander);
         return new double[] {vectorToPlatform.x, vectorToPlatform.y,
-                                lander.vel.x, lander.vel.y}; // TODO: kerekítés???
+                                lander.vel.x, lander.vel.y}; 
     }
 
     EnvStepDTO step(int action) {
