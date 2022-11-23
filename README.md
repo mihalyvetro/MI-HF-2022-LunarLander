@@ -196,5 +196,5 @@ A megvalósítandó függvények szignatúráinak leírása az alábbi:
 * A feltöltött megoldás megengedett futásideje CPU-időben 40 másodperc. Időtúllépés esetén a rendszer automatikusan leállítja a kód futását.
 * A feltöltött megoldás összesen legfeljebb 1000 MB memóriát allokálhat. Ezen érték túllépése esetén a rendszer automatikusan leállítja a kód futását.
 * A 2. beadástól kezdve 10 percenként lehet újra próbálkozni.
-* Az újonnan beadott megoldás eredménye felülírja az előzőt.
+* A legmagasabb pontszámot elérő beadás eredménye számít.
 * Minden bugreportot/javaslatot szívesen fogadunk, igyekszünk javítani.
